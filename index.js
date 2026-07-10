@@ -1,7 +1,16 @@
 const express = require("express");
 const app = express();
 const snapsave = require("./snapsave-downloader/src/index");
-const port = 3000;
+const port = process.env.PORT || 3000; 
+
+// --- WE ADDED THIS BLOCK TO FIX CORS ---
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+// ---------------------------------------
 
 app.get("/", (req, res) => {
   res.json({ message: "Hello World!" });
